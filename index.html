@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Documentary Feed</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="demo" class="demo-banner" hidden>
+    Demo mode: showing sample data. Add your Firebase settings in firebase-config.js to go live.
+  </div>
+
+  <header class="site">
+    <div class="wrap">
+      <h1 id="siteTitle">Documentary Feed</h1>
+      <p id="siteSub"></p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div id="empty" class="empty-state" hidden>No documentaries posted yet. Check back soon.</div>
+
+    <div id="layout" class="layout" hidden>
+      <article>
+        <div class="player" id="player"></div>
+        <span class="label" id="label">This week's documentary</span>
+        <h2 class="title" id="title"></h2>
+        <div class="date" id="date"></div>
+        <p class="note" id="note"></p>
+
+        <section class="reactions" aria-labelledby="rxHead">
+          <h3 id="rxHead">What did you think?</h3>
+          <p class="hint">Tap a reaction. Each one counts once per device.</p>
+          <div class="buttons" id="buttons"></div>
+          <ul class="feed" id="feed" aria-live="polite"></ul>
+        </section>
+      </article>
+
+      <aside aria-labelledby="prevHead">
+        <h3 id="prevHead">All documentaries</h3>
+        <ul id="list"></ul>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site">
+    <div class="wrap">Videos are hosted on YouTube. Reactions are anonymous.</div>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Post a documentary</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="demo" class="demo-banner" hidden>
+    Demo mode: nothing is saved. Add your Firebase settings in firebase-config.js to go live.
+  </div>
+
+  <header class="site">
+    <div class="wrap">
+      <h1>Post a documentary</h1>
+      <p><a href="./">View the public page</a></p>
+    </div>
+  </header>
+
+  <main class="wrap" style="max-width: 800px;">
+    <div id="signedOut" class="card">
+      <h2>Sign in</h2>
+      <p>Only the instructor account can post videos.</p>
+      <button class="btn" id="signIn" type="button">Sign in with Google</button>
+      <p class="msg err" id="authMsg"></p>
+    </div>
+
+    <div id="signedIn" hidden>
+      <div class="card">
+        <div class="row" style="margin-top: 0; justify-content: space-between;">
+          <span>Signed in as <strong id="who"></strong></span>
+          <button class="btn secondary small" id="signOut" type="button">Sign out</button>
+        </div>
+      </div>
+
+      <form class="card" id="form">
+        <h2>New video</h2>
+        <label for="url">YouTube link</label>
+        <input type="url" id="url" placeholder="https://www.youtube.com/watch?v=..." required>
+        <img class="preview-thumb" id="prev" alt="Video thumbnail preview">
+
+        <label for="vtitle">Title</label>
+        <input type="text" id="vtitle" maxlength="150" required>
+
+        <label for="vnote">Note for students (optional)</label>
+        <textarea id="vnote" maxlength="1500" placeholder="Why you recommend it, what to watch for, due dates..."></textarea>
+
+        <div class="row">
+          <button class="btn" type="submit" id="post">Post to feed</button>
+          <span class="msg" id="formMsg" role="status"></span>
+        </div>
+      </form>
+
+      <div class="card">
+        <h2>Posted videos</h2>
+        <p class="hint">The newest visible video is featured on the main page. Hiding keeps the video and its reactions but removes it from the public page.</p>
+        <ul class="admin-list" id="adminList"></ul>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="admin.js"></script>
+</body>
+</html>
