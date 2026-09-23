@@ -20,6 +20,9 @@ export const ADMIN_EMAIL = "carlosgutierrezmannix@gmail.com";
 
 // 3. Text shown at the top of the page.
 export const SITE_TITLE = "Documentary Feed";
+// Look of the site: "clean", "vaquero" (UTRGV orange and gray), or "cinema" (dark).
+export const SITE_THEME = "cinema";
+
 export const SITE_SUBTITLE = "Documentaries recommended by Dr. Gutierrez-Mannix";
 
 // 4. The preset reactions students can leave. The "id" values must match

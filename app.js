@@ -1,4 +1,5 @@
-import { SITE_TITLE, SITE_SUBTITLE, REACTIONS } from "./firebase-config.js";
+import { SITE_TITLE, SITE_SUBTITLE, REACTIONS, SITE_THEME } from "./firebase-config.js";
+document.body.dataset.theme = new URLSearchParams(location.search).get("theme") || SITE_THEME || "clean";
 import { getStore, DEMO, thumb, niceDate, timeAgo } from "./data.js";
 
 const $ = id => document.getElementById(id);
@@ -61,10 +62,14 @@ function renderButtons() {
     b.setAttribute("aria-pressed", done ? "true" : "false");
     const t = document.createElement("span");
     t.textContent = reactionText(r);
-    const c = document.createElement("span");
-    c.className = "count";
-    c.textContent = counts[r.id] || 0;
-    b.append(t, c);
+    b.append(t);
+    if (counts[r.id]) {
+      const c = document.createElement("span");
+      c.className = "count";
+      c.textContent = counts[r.id];
+      c.setAttribute("aria-label", counts[r.id] + " reactions");
+      b.append(c);
+    }
     b.addEventListener("click", async () => {
       b.disabled = true;
       try {

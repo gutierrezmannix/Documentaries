@@ -1,4 +1,5 @@
-import { ADMIN_EMAIL } from "./firebase-config.js";
+import { ADMIN_EMAIL, SITE_THEME } from "./firebase-config.js";
+document.body.dataset.theme = SITE_THEME || "clean";
 import { getStore, DEMO, youtubeId, thumb, niceDate } from "./data.js";
 
 const $ = id => document.getElementById(id);
