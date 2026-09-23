@@ -8,9 +8,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Source+Sans+3:wght@400;600;700&display=swap">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=3">
 </head>
-<body>
+<body data-theme="cinema" data-mode="dark">
+  <script>
+    try { var m = localStorage.getItem("mode"); if (m) document.body.dataset.mode = m; } catch (e) {}
+  </script>
   <div id="demo" class="demo-banner" hidden>
     Demo mode: nothing is saved. Add your Firebase settings in firebase-config.js to go live.
   </div>
@@ -64,6 +67,6 @@
     </div>
   </main>
 
-  <script type="module" src="admin.js"></script>
+  <script type="module" src="admin.js?v=3"></script>
 </body>
 </html>

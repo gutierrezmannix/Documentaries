@@ -1,5 +1,5 @@
 // Data layer: talks to Firebase, or to a small in-memory sample set in demo mode.
-import { firebaseConfig } from "./firebase-config.js";
+import { firebaseConfig } from "./firebase-config.js?v=3";
 
 const FB = "https://www.gstatic.com/firebasejs/10.12.2";
 

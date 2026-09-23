@@ -7,17 +7,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Source+Sans+3:wght@400;600;700&display=swap">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=3">
 </head>
-<body>
+<body data-theme="cinema" data-mode="dark">
+  <script>
+    try { var m = localStorage.getItem("mode"); if (m) document.body.dataset.mode = m; } catch (e) {}
+  </script>
   <div id="demo" class="demo-banner" hidden>
     Demo mode: showing sample data. Add your Firebase settings in firebase-config.js to go live.
   </div>
 
   <header class="site">
     <div class="wrap">
-      <h1 id="siteTitle">Documentary Feed</h1>
-      <p id="siteSub"></p>
+      <div>
+        <h1 id="siteTitle">Documentary Feed</h1>
+        <p id="siteSub"></p>
+      </div>
+      <button type="button" class="mode-toggle" id="modeToggle" aria-label="Switch between dark and light background">Light mode</button>
     </div>
   </header>
 
@@ -51,6 +57,6 @@
     <div class="wrap">Videos are hosted on YouTube. Reactions are anonymous.</div>
   </footer>
 
-  <script type="module" src="app.js"></script>
+  <script type="module" src="app.js?v=3"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
-import { ADMIN_EMAIL, SITE_THEME } from "./firebase-config.js";
-document.body.dataset.theme = SITE_THEME || "clean";
-import { getStore, DEMO, youtubeId, thumb, niceDate } from "./data.js";
+import { ADMIN_EMAIL, SITE_THEME } from "./firebase-config.js?v=3";
+document.body.dataset.theme = SITE_THEME || document.body.dataset.theme;
+import { getStore, DEMO, youtubeId, thumb, niceDate } from "./data.js?v=3";
 
 const $ = id => document.getElementById(id);
 if (DEMO) $("demo").hidden = false;

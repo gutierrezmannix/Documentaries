@@ -214,7 +214,7 @@ body[data-theme="vaquero"] .buttons button:disabled .count { background: #fff; c
 body[data-theme="vaquero"] .player { border-radius: 4px; box-shadow: 0 0 0 4px #424242; }
 body[data-theme="vaquero"] footer.site { background: #424242; color: #e6e6e6; border: 0; }
 
-/* ---- Cinema: dark "movie night" look ---- */
+/* ---- Cinema: orange accents, dark or light mode ---- */
 body[data-theme="cinema"] {
   --bg: #121212;
   --panel: #1f1f1f;
@@ -222,49 +222,70 @@ body[data-theme="cinema"] {
   --muted: #a9a9a9;
   --line: #2e2e2e;
   --accent: #ff8a3d;
-  --accent-soft: #2e2016;
+  --accent-soft: #2a1a10;
+  --orange: #cb4900;
+  --btn-bg: #1f1f1f;
+  --btn-line: #3a3a3a;
+  --header-bg: linear-gradient(180deg, #1c1c1c 0%, #121212 100%);
+  --header-sub: #ffb384;
+  --thumb-bg: #2a2a2a;
+  --glow: rgba(203, 73, 0, .28);
   font-family: "Source Sans 3", -apple-system, "Segoe UI", sans-serif;
   font-size: 17px;
 }
+body[data-theme="cinema"][data-mode="light"] {
+  --bg: #ffffff;
+  --panel: #f5f3f1;
+  --text: #1f1f1f;
+  --muted: #5c5c61;
+  --line: #e6e2de;
+  --accent: #cb4900;
+  --accent-soft: #fdf0e7;
+  --btn-bg: #ffffff;
+  --btn-line: #d9d4ce;
+  --header-bg: linear-gradient(180deg, #ffffff 0%, #faf6f2 100%);
+  --header-sub: #9a3a00;
+  --thumb-bg: #e4e1dd;
+  --glow: rgba(203, 73, 0, .18);
+}
+body[data-theme="cinema"] header.site { background: var(--header-bg); border-bottom: 4px solid var(--orange); }
+body[data-theme="cinema"] header.site .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
 body[data-theme="cinema"] header.site h1 {
-  font-family: "Oswald", "Arial Narrow", sans-serif; font-weight: 500;
+  font-family: "Oswald", "Arial Narrow", sans-serif; font-weight: 500; color: var(--text);
   text-transform: uppercase; letter-spacing: 0.08em; font-size: 30px;
 }
-body[data-theme="cinema"] header.site h1::before { content: "\25B6\00A0"; color: var(--accent); font-size: 0.8em; }
-body[data-theme="cinema"] .player { box-shadow: 0 20px 60px rgba(0,0,0,.6); }
+body[data-theme="cinema"] header.site h1::before { content: "\25B6\00A0"; color: var(--orange); font-size: 0.8em; }
+body[data-theme="cinema"] header.site p { color: var(--header-sub); }
+body[data-theme="cinema"] .player { border: 2px solid var(--orange); box-shadow: 0 18px 50px var(--glow); }
+body[data-theme="cinema"] .label { background: var(--orange); color: #fff; padding: 3px 10px; border-radius: 3px; }
 body[data-theme="cinema"] h2.title { font-family: "Oswald", sans-serif; font-weight: 500; font-size: 30px; }
-body[data-theme="cinema"] .buttons button { background: var(--panel); color: var(--text); border-color: #3a3a3a; }
-body[data-theme="cinema"] .buttons .count { background: #333; color: var(--text); }
-body[data-theme="cinema"] aside a.item[aria-current="true"] { border-color: #6b3d1c; }
-body[data-theme="cinema"] aside .thumb { background: #2a2a2a; }
-body[data-theme="cinema"] input[type="text"], body[data-theme="cinema"] input[type="url"], body[data-theme="cinema"] textarea {
-  background: #1b1b1b; color: var(--text); border-color: #3a3a3a;
-}
-
-/* ---- Cinema: extra orange ---- */
-body[data-theme="cinema"] header.site {
-  background: linear-gradient(180deg, #1c1c1c 0%, #121212 100%);
-  border-bottom: 4px solid #cb4900;
-}
-body[data-theme="cinema"] header.site h1 { color: #fff; }
-body[data-theme="cinema"] header.site p { color: #ffb384; }
-body[data-theme="cinema"] .player {
-  border: 2px solid #cb4900;
-  box-shadow: 0 0 0 1px #000, 0 18px 50px rgba(203, 73, 0, .28);
-}
-body[data-theme="cinema"] .label {
-  background: #cb4900; color: #fff; padding: 3px 10px; border-radius: 3px;
-}
-body[data-theme="cinema"] section.reactions { border-top: 2px solid #cb4900; }
+body[data-theme="cinema"] section.reactions { border-top: 2px solid var(--orange); }
 body[data-theme="cinema"] section.reactions h3,
 body[data-theme="cinema"] aside h3 {
   font-family: "Oswald", sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: var(--accent);
 }
-body[data-theme="cinema"] aside h3 { border-bottom: 2px solid #cb4900; padding-bottom: 6px; }
-body[data-theme="cinema"] .buttons button:hover:not(:disabled) { border-color: var(--accent); background: #2a1a10; }
-body[data-theme="cinema"] .buttons button:disabled { background: #cb4900; border-color: #cb4900; color: #fff; }
-body[data-theme="cinema"] .buttons button:disabled .count { background: #fff; color: #cb4900; }
-body[data-theme="cinema"] aside a.item[aria-current="true"] { background: #2a1a10; border-color: #cb4900; }
+body[data-theme="cinema"] aside h3 { border-bottom: 2px solid var(--orange); padding-bottom: 6px; }
+body[data-theme="cinema"] .buttons button { background: var(--btn-bg); color: var(--text); border-color: var(--btn-line); }
+body[data-theme="cinema"] .buttons .count { background: var(--line); color: var(--text); }
+body[data-theme="cinema"] .buttons button:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
+body[data-theme="cinema"] .buttons button:disabled { background: var(--orange); border-color: var(--orange); color: #fff; }
+body[data-theme="cinema"] .buttons button:disabled .count { background: #fff; color: var(--orange); }
+body[data-theme="cinema"] aside a.item[aria-current="true"] { background: var(--accent-soft); border-color: var(--orange); }
+body[data-theme="cinema"] aside .thumb { background: var(--thumb-bg); }
 body[data-theme="cinema"] .feed li span:first-child::before { content: "\25CF\00A0\00A0"; color: var(--accent); }
-body[data-theme="cinema"] footer.site { border-top: 2px solid #cb4900; }
-body[data-theme="cinema"] .btn.secondary { background: transparent; }
+body[data-theme="cinema"] footer.site { border-top: 2px solid var(--orange); }
+body[data-theme="cinema"] .btn { background: var(--orange); border-color: var(--orange); }
+body[data-theme="cinema"] .btn.secondary { background: transparent; color: var(--accent); border-color: var(--accent); }
+body[data-theme="cinema"] input[type="text"], body[data-theme="cinema"] input[type="url"], body[data-theme="cinema"] textarea {
+  background: var(--btn-bg); color: var(--text); border-color: var(--btn-line);
+}
+
+/* ---- Dark / light switch ---- */
+.mode-toggle {
+  font: inherit; font-size: 15px; font-weight: 600;
+  min-height: 44px; padding: 8px 16px; border-radius: 999px; cursor: pointer;
+  background: transparent; color: var(--text); border: 1px solid var(--accent);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.mode-toggle:hover { background: var(--accent-soft); }
+body:not([data-theme="cinema"]) .mode-toggle { display: none; }

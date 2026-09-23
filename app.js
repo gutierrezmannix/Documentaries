@@ -1,6 +1,19 @@
-import { SITE_TITLE, SITE_SUBTITLE, REACTIONS, SITE_THEME } from "./firebase-config.js";
-document.body.dataset.theme = new URLSearchParams(location.search).get("theme") || SITE_THEME || "clean";
-import { getStore, DEMO, thumb, niceDate, timeAgo } from "./data.js";
+import { SITE_TITLE, SITE_SUBTITLE, REACTIONS, SITE_THEME } from "./firebase-config.js?v=3";
+document.body.dataset.theme = new URLSearchParams(location.search).get("theme") || SITE_THEME || document.body.dataset.theme;
+
+// Dark / light switch (remembered on each student's device)
+const modeBtn = document.getElementById("modeToggle");
+function paintMode() {
+  const dark = document.body.dataset.mode !== "light";
+  modeBtn.textContent = dark ? "\u2600 Light mode" : "\u263E Dark mode";
+}
+modeBtn.addEventListener("click", () => {
+  document.body.dataset.mode = document.body.dataset.mode === "light" ? "dark" : "light";
+  try { localStorage.setItem("mode", document.body.dataset.mode); } catch {}
+  paintMode();
+});
+paintMode();
+import { getStore, DEMO, thumb, niceDate, timeAgo } from "./data.js?v=3";
 
 const $ = id => document.getElementById(id);
 const byId = Object.fromEntries(REACTIONS.map(r => [r.id, r]));
