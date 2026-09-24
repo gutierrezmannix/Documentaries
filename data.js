@@ -1,5 +1,5 @@
 // Data layer: talks to Firebase, or to a small in-memory sample set in demo mode.
-import { firebaseConfig } from "./firebase-config.js?v=3";
+import { firebaseConfig } from "./firebase-config.js?v=6";
 
 const FB = "https://www.gstatic.com/firebasejs/10.12.2";
 
@@ -53,10 +53,10 @@ function demoStore() {
   const day = 86400000;
   const now = Date.now();
   const videos = [
-    { id: "d3", youtubeId: "", title: "Sample: Border Towns and the Water Question",
+    { id: "d3", youtubeId: "", title: "Sample: Border Towns and the Water Question", category: "politics-culture",
       note: "This is sample data. Once Firebase is connected, your real posts appear here. Watch the first 30 minutes before Thursday.",
       postedAt: new Date(now - 1 * day) },
-    { id: "d2", youtubeId: "", title: "Sample: How a Bill Moves Through the Texas Legislature",
+    { id: "d2", youtubeId: "", title: "Sample: How a Bill Moves Through the Texas Legislature", category: "american-state",
       note: "Good background for our unit on state legislatures.", postedAt: new Date(now - 8 * day) },
     { id: "d1", youtubeId: "", title: "Sample: Elections in Mexico, 2000 to Today",
       note: "Pay attention to the role of the INE.", postedAt: new Date(now - 15 * day) }

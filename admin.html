@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Source+Sans+3:wght@400;600;700&display=swap">
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body data-theme="cinema" data-mode="dark">
   <script>
@@ -50,6 +50,11 @@
         <label for="vtitle">Title</label>
         <input type="text" id="vtitle" maxlength="150" required>
 
+        <label for="vcat">Which list does it go in?</label>
+        <select id="vcat" required>
+          <option value="">Choose a list...</option>
+        </select>
+
         <label for="vnote">Note for students (optional)</label>
         <textarea id="vnote" maxlength="1500" placeholder="Why you recommend it, what to watch for, due dates..."></textarea>
 
@@ -67,6 +72,6 @@
     </div>
   </main>
 
-  <script type="module" src="admin.js?v=3"></script>
+  <script type="module" src="admin.js?v=6"></script>
 </body>
 </html>

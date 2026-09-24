@@ -1,9 +1,16 @@
-import { ADMIN_EMAIL, SITE_THEME } from "./firebase-config.js?v=3";
+import { ADMIN_EMAIL, SITE_THEME, CATEGORIES } from "./firebase-config.js?v=6";
 document.body.dataset.theme = SITE_THEME || document.body.dataset.theme;
-import { getStore, DEMO, youtubeId, thumb, niceDate } from "./data.js?v=3";
+import { getStore, DEMO, youtubeId, thumb, niceDate } from "./data.js?v=6";
 
 const $ = id => document.getElementById(id);
 if (DEMO) $("demo").hidden = false;
+
+for (const c of CATEGORIES) {
+  const o = document.createElement("option");
+  o.value = c.id;
+  o.textContent = c.label;
+  $("vcat").appendChild(o);
+}
 
 const store = await getStore();
 let stopVideos = null;
@@ -58,10 +65,12 @@ $("form").addEventListener("submit", async e => {
   if (!id) { msg($("formMsg"), "That does not look like a YouTube link.", "err"); return; }
   const title = $("vtitle").value.trim();
   if (!title) { msg($("formMsg"), "Please add a title.", "err"); return; }
+  const category = $("vcat").value;
+  if (!category) { msg($("formMsg"), "Please choose a list.", "err"); return; }
   $("post").disabled = true;
   msg($("formMsg"), "Posting...");
   try {
-    await store.addVideo({ youtubeId: id, title, note: $("vnote").value.trim(), visible: true });
+    await store.addVideo({ youtubeId: id, title, category, note: $("vnote").value.trim(), visible: true });
     $("form").reset();
     $("prev").style.display = "none";
     msg($("formMsg"), "Posted. It is now featured on the main page.", "ok");
@@ -109,7 +118,22 @@ function renderList(videos) {
     del.addEventListener("click", () => {
       if (confirm(`Delete "${v.title}"? This cannot be undone.`)) store.deleteVideo(v.id);
     });
-    actions.append(hide, del);
+    const sel = document.createElement("select");
+    sel.className = "cat-select";
+    sel.setAttribute("aria-label", "List for " + v.title);
+    const none = document.createElement("option");
+    none.value = "";
+    none.textContent = "No list yet";
+    sel.appendChild(none);
+    for (const c of CATEGORIES) {
+      const o = document.createElement("option");
+      o.value = c.id;
+      o.textContent = c.label;
+      sel.appendChild(o);
+    }
+    sel.value = v.category || "";
+    sel.addEventListener("change", () => store.updateVideo(v.id, { category: sel.value }));
+    actions.append(sel, hide, del);
     li.append(img, info, actions);
     ul.appendChild(li);
   }

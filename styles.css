@@ -299,3 +299,29 @@ body:not([data-theme="cinema"]) .mode-toggle { display: none; }
 body[data-mode="light"] .sitenav { background: #f5f3f1; border-bottom-color: #e6e2de; }
 body[data-mode="light"] .sitenav a { color: #333; }
 body[data-mode="light"] .sitenav a:hover, body[data-mode="light"] .sitenav a[aria-current="page"] { color: #cb4900; }
+
+/* ---- Category lists ---- */
+.cat-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 24px; }
+.cat-tab {
+  font: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
+  min-height: 44px; padding: 8px 16px; border-radius: 999px;
+  background: var(--btn-bg, #fff); color: var(--text); border: 1px solid var(--btn-line, var(--line));
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.cat-tab:hover { border-color: var(--accent); background: var(--accent-soft); }
+.cat-tab[aria-pressed="true"] { background: var(--orange, var(--accent)); border-color: var(--orange, var(--accent)); color: #fff; }
+.cat-count { font-size: 13px; font-weight: 700; background: var(--line); color: var(--text); border-radius: 999px; padding: 0 8px; }
+.cat-tab[aria-pressed="true"] .cat-count { background: #fff; color: var(--orange, var(--accent)); }
+aside li.group-head {
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--muted); margin: 16px 0 6px; padding-left: 6px;
+}
+aside li.group-head:first-child { margin-top: 4px; }
+select { font: inherit; padding: 9px 10px; border-radius: 6px; border: 1px solid #c9c9c4; width: 100%; background: #fff; color: #1c1c1c; }
+.cat-select { width: auto; font-size: 14px; padding: 6px 8px; }
+body[data-theme="cinema"] select { background: var(--btn-bg); color: var(--text); border-color: var(--btn-line); }
+.admin-list li { grid-template-columns: 120px 1fr auto; }
+body[data-theme="cinema"] .msg.ok { color: #7ddc97; }
+body[data-theme="cinema"] .msg.err { color: #ff8f8f; }
+body[data-theme="cinema"][data-mode="light"] .msg.ok { color: #176b2c; }
+body[data-theme="cinema"][data-mode="light"] .msg.err { color: #a11; }

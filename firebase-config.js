@@ -25,6 +25,12 @@ export const SITE_THEME = "cinema";
 
 export const SITE_SUBTITLE = "Documentaries recommended by Dr. Gutierrez-Mannix";
 
+// The lists students can browse. You pick one when you post a video.
+export const CATEGORIES = [
+  { id: "politics-culture", label: "Politics and Culture" },
+  { id: "american-state",   label: "American and State Government" }
+];
+
 // 4. The preset reactions students can leave. The "id" values must match
 //    the list in firestore.rules. You can change the labels anytime.
 export const REACTIONS = [

@@ -1,4 +1,4 @@
-import { SITE_TITLE, SITE_SUBTITLE, REACTIONS, SITE_THEME } from "./firebase-config.js?v=3";
+import { SITE_TITLE, SITE_SUBTITLE, REACTIONS, SITE_THEME, CATEGORIES } from "./firebase-config.js?v=6";
 document.body.dataset.theme = new URLSearchParams(location.search).get("theme") || SITE_THEME || document.body.dataset.theme;
 
 // Dark / light switch (remembered on each student's device)
@@ -13,7 +13,7 @@ modeBtn.addEventListener("click", () => {
   paintMode();
 });
 paintMode();
-import { getStore, DEMO, thumb, niceDate, timeAgo } from "./data.js?v=3";
+import { getStore, DEMO, thumb, niceDate, timeAgo } from "./data.js?v=6";
 
 const $ = id => document.getElementById(id);
 const byId = Object.fromEntries(REACTIONS.map(r => [r.id, r]));
@@ -122,80 +122,148 @@ function renderFeed() {
   }
 }
 
-function renderList() {
+const CAT_LABEL = Object.fromEntries(CATEGORIES.map(c => [c.id, c.label]));
+let currentCat = new URLSearchParams(location.search).get("cat") || "all";
+
+function catOf(v) { return CAT_LABEL[v.category] ? v.category : "other"; }
+function inCat(v) { return currentCat === "all" || catOf(v) === currentCat; }
+
+function linkFor(id) {
+  const q = new URLSearchParams();
+  if (currentCat !== "all") q.set("cat", currentCat);
+  if (id) q.set("v", id);
+  const s = q.toString();
+  return s ? "?" + s : "./";
+}
+
+function renderTabs() {
+  const box = $("catTabs");
+  box.innerHTML = "";
+  const tabs = [{ id: "all", label: "All documentaries" }, ...CATEGORIES];
+  for (const c of tabs) {
+    const n = c.id === "all" ? videos.length : videos.filter(v => catOf(v) === c.id).length;
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "cat-tab";
+    b.setAttribute("aria-pressed", c.id === currentCat ? "true" : "false");
+    const t = document.createElement("span");
+    t.textContent = c.label;
+    const k = document.createElement("span");
+    k.className = "cat-count";
+    k.textContent = n;
+    b.append(t, k);
+    b.addEventListener("click", () => {
+      currentCat = c.id;
+      currentId = null;
+      history.pushState(null, "", linkFor(null));
+      render();
+    });
+    box.appendChild(b);
+  }
+}
+
+function listItem(v) {
+  const li = document.createElement("li");
+  const a = document.createElement("a");
+  a.className = "item";
+  a.href = linkFor(v.id);
+  if (v.id === shownId) a.setAttribute("aria-current", "true");
+  const img = document.createElement("img");
+  img.className = "thumb";
+  img.alt = "";
+  img.loading = "lazy";
+  if (v.youtubeId) img.src = thumb(v.youtubeId);
+  const txt = document.createElement("div");
+  if (v.id === shownId) {
+    const n = document.createElement("div");
+    n.className = "now";
+    n.textContent = "Now showing";
+    txt.appendChild(n);
+  }
+  const t = document.createElement("div");
+  t.className = "t";
+  t.textContent = v.title;
+  const d = document.createElement("div");
+  d.className = "d";
+  d.textContent = niceDate(v.postedAt);
+  txt.append(t, d);
+  a.append(img, txt);
+  a.addEventListener("click", e => {
+    e.preventDefault();
+    currentId = v.id;
+    history.pushState(null, "", a.href);
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  li.appendChild(a);
+  return li;
+}
+
+function renderList(list) {
   const ul = $("list");
   ul.innerHTML = "";
-  videos.forEach(v => {
-    const li = document.createElement("li");
-    const a = document.createElement("a");
-    a.className = "item";
-    a.href = "?v=" + encodeURIComponent(v.id);
-    if (v.id === shownId) a.setAttribute("aria-current", "true");
-    const img = document.createElement("img");
-    img.className = "thumb";
-    img.alt = "";
-    img.loading = "lazy";
-    if (v.youtubeId) img.src = thumb(v.youtubeId);
-    const txt = document.createElement("div");
-    if (v.id === shownId) {
-      const n = document.createElement("div");
-      n.className = "now";
-      n.textContent = "Now showing";
-      txt.appendChild(n);
-    }
-    const t = document.createElement("div");
-    t.className = "t";
-    t.textContent = v.title;
-    const d = document.createElement("div");
-    d.className = "d";
-    d.textContent = niceDate(v.postedAt);
-    txt.append(t, d);
-    a.append(img, txt);
-    a.addEventListener("click", e => {
-      e.preventDefault();
-      currentId = v.id;
-      history.pushState(null, "", a.href);
-      render();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-    li.appendChild(a);
-    ul.appendChild(li);
-  });
+  if (currentCat !== "all") {
+    $("prevHead").textContent = CAT_LABEL[currentCat] || "Other documentaries";
+    list.forEach(v => ul.appendChild(listItem(v)));
+    return;
+  }
+  $("prevHead").textContent = "All documentaries";
+  const groups = [...CATEGORIES, { id: "other", label: "Other" }];
+  for (const g of groups) {
+    const items = list.filter(v => catOf(v) === g.id);
+    if (!items.length) continue;
+    const h = document.createElement("li");
+    h.className = "group-head";
+    h.textContent = g.label;
+    ul.appendChild(h);
+    items.forEach(v => ul.appendChild(listItem(v)));
+  }
 }
 
 function render() {
+  renderTabs();
   if (!videos.length) {
     $("layout").hidden = true;
     $("empty").hidden = false;
     return;
   }
+  const list = videos.filter(inCat);
+  if (!list.length) {
+    $("layout").hidden = true;
+    $("empty").hidden = false;
+    $("empty").textContent = "No documentaries in this list yet. Check back soon.";
+    return;
+  }
   $("empty").hidden = true;
   $("layout").hidden = false;
-  const v = videos.find(x => x.id === currentId) || videos[0];
-  const isLatest = v.id === videos[0].id;
+  const v = list.find(x => x.id === currentId) || list[0];
+  const isLatest = v.id === list[0].id;
 
   if (v.id !== shownId) {
     shownId = v.id;
     renderPlayer(v);
     if (stopReactions) stopReactions();
     latestReactions = [];
-    stopReactions = store.watchReactions(v.id, list => {
-      latestReactions = list;
+    stopReactions = store.watchReactions(v.id, rx => {
+      latestReactions = rx;
       renderButtons();
       renderFeed();
     }, err => console.error(err));
   }
-  $("label").textContent = isLatest ? "Latest documentary" : "From the archive";
+  const where = currentCat === "all" ? "" : " in " + (CAT_LABEL[currentCat] || "this list");
+  $("label").textContent = isLatest ? "Latest" + where : "From the archive";
   $("title").textContent = v.title;
-  $("date").textContent = "Posted " + niceDate(v.postedAt);
+  $("date").textContent = "Posted " + niceDate(v.postedAt) + (CAT_LABEL[v.category] ? "  \u00B7  " + CAT_LABEL[v.category] : "");
   $("note").textContent = v.note || "";
   renderButtons();
   renderFeed();
-  renderList();
+  renderList(list);
 }
 
 window.addEventListener("popstate", () => {
-  currentId = new URLSearchParams(location.search).get("v");
+  const q = new URLSearchParams(location.search);
+  currentId = q.get("v");
+  currentCat = q.get("cat") || "all";
   render();
 });
 
