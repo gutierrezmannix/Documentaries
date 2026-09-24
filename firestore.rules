@@ -1,0 +1,35 @@
+rules_version = '2';
+
+// Paste this whole file into: Firebase console > Firestore Database > Rules > Publish
+// Change the email below to the same ADMIN_EMAIL you put in firebase-config.js.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email == "carlosgutierrezmannix@gmail.com"
+        && request.auth.token.email_verified == true;
+    }
+
+    // Videos: anyone can watch, only you can post, edit, or delete.
+    match /videos/{videoId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+
+      // Reactions: anyone can add one, but ONLY from the preset list.
+      // No free text is accepted, and nobody but you can edit or delete.
+      match /reactions/{reactionId} {
+        allow read: if true;
+        allow create: if request.resource.data.keys().hasOnly(["type", "createdAt"])
+          && request.resource.data.type in [
+               "heart", "like", "great", "amazing", "supergood",
+               "learned", "discuss", "boring", "moreaction"
+             ]
+          && request.resource.data.createdAt == request.time;
+        allow update: if false;
+        allow delete: if isAdmin();
+      }
+    }
+  }
+}
