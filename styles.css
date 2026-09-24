@@ -289,3 +289,13 @@ body[data-theme="cinema"] input[type="text"], body[data-theme="cinema"] input[ty
 }
 .mode-toggle:hover { background: var(--accent-soft); }
 body:not([data-theme="cinema"]) .mode-toggle { display: none; }
+
+/* ---- Links back to the main site ---- */
+.sitenav { background: #0a0a0a; border-bottom: 1px solid #262626; }
+.sitenav .wrap { display: flex; flex-wrap: wrap; gap: 4px 22px; padding-top: 10px; padding-bottom: 10px; }
+.sitenav a { color: #d6d6d6; text-decoration: none; font-size: 15px; font-weight: 600; padding: 4px 0; }
+.sitenav a:hover { color: #ff8a3d; }
+.sitenav a[aria-current="page"] { color: #ff8a3d; border-bottom: 2px solid #cb4900; }
+body[data-mode="light"] .sitenav { background: #f5f3f1; border-bottom-color: #e6e2de; }
+body[data-mode="light"] .sitenav a { color: #333; }
+body[data-mode="light"] .sitenav a:hover, body[data-mode="light"] .sitenav a[aria-current="page"] { color: #cb4900; }
