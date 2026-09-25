@@ -28,7 +28,8 @@ export const SITE_SUBTITLE = "Documentaries recommended by Dr. Gutierrez-Mannix"
 // The lists students can browse. You pick one when you post a video.
 export const CATEGORIES = [
   { id: "politics-culture", label: "Politics and Culture" },
-  { id: "american-state",   label: "American and State Government" }
+  { id: "american-state",   label: "American and State Government" },
+  { id: "history",          label: "History" }
 ];
 
 // 4. The preset reactions students can leave. The "id" values must match
