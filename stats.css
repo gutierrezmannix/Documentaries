@@ -4,14 +4,14 @@
   --s-learning: #d95926;   /* slot 2 */
   --s-critical: #199e70;   /* slot 3 */
   --bar: #e8914f;
-  --grid: #194f39;
+  --grid: #2e2e2e;
 }
 body[data-mode="light"] .viz-root {
   --s-positive: #2a78d6;
   --s-learning: #eb6834;
   --s-critical: #1baf7a;
   --bar: #bf5700;
-  --grid: #e5dbcb;
+  --grid: #e6e2de;
 }
 
 .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
@@ -23,7 +23,7 @@ body[data-mode="light"] .viz-root {
 .pulse-sec { border-top: 1px solid var(--line); padding-top: 18px; margin-top: 22px; }
 .pulse-sec h3 { margin: 0 0 4px; font-size: 18px; }
 body[data-theme="cinema"] .pulse-sec h3 {
-  font-family: "Oswald", sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: var(--green-head, var(--accent));
+  font-family: "Oswald", sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: var(--green-text, var(--accent));
 }
 
 /* horizontal bars */

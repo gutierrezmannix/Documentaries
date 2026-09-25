@@ -214,51 +214,54 @@ body[data-theme="vaquero"] .buttons button:disabled .count { background: #fff; c
 body[data-theme="vaquero"] .player { border-radius: 4px; box-shadow: 0 0 0 4px #424242; }
 body[data-theme="vaquero"] footer.site { background: #424242; color: #e6e6e6; border: 0; }
 
-/* ---- Cinema: UT burnt orange on the home page's greens, dark or light mode ---- */
+/* ---- Cinema: black background, UT burnt orange alternating with the home page green ---- */
 body[data-theme="cinema"] {
-  --bg: #0e2b20;          /* verde-900 */
-  --panel: #143e2d;       /* verde-800 */
-  --text: #f2ece1;        /* arena-100 */
-  --muted: #afd2bf;       /* verde-200 */
-  --line: #194f39;        /* verde-700 */
-  --accent: #e8914f;      /* burnt orange, lifted to read as text on dark green */
-  --accent-soft: #2e331a;
-  --orange: #bf5700;      /* UT burnt orange */
+  --bg: #121212;
+  --panel: #1f1f1f;
+  --text: #f1f1f1;
+  --muted: #a9a9a9;
+  --line: #2e2e2e;
+  --orange: #bf5700;      /* UT burnt orange: fills and lines */
+  --green: #2e7d58;       /* home page verde-500: fills and lines */
   --on-orange: #ffffff;
+  --on-green: #ffffff;
+  --accent: #e8914f;      /* orange text on black */
+  --green-text: #80b79b;  /* green text on black (verde-300) */
+  --accent-soft: #2a1a10;
+  --green-soft: #13261d;
   --tab-on: var(--orange);
-  --green-head: #80b79b;  /* verde-300 */
-  --btn-bg: #143e2d;
-  --btn-line: #255e45;
-  --header-bg: linear-gradient(180deg, #143e2d 0%, #0e2b20 100%);
-  --header-sub: #afd2bf;
-  --thumb-bg: #194f39;
+  --btn-bg: #1f1f1f;
+  --btn-line: #3a3a3a;
+  --header-bg: linear-gradient(180deg, #1c1c1c 0%, #121212 100%);
+  --header-sub: var(--green-text);
+  --thumb-bg: #2a2a2a;
   --glow: rgba(191, 87, 0, .22);
-  --nav-bg: #0a2018;
-  --nav-line: #194f39;
-  --nav-link: #d6e8dd;
-  --nav-on: #e8914f;
+  --nav-bg: #0a0a0a;
+  --nav-line: #262626;
+  --nav-link: #d6d6d6;
+  --nav-on: var(--accent);
   font-family: "Source Sans 3", -apple-system, "Segoe UI", sans-serif;
   font-size: 17px;
 }
 body[data-theme="cinema"][data-mode="light"] {
-  --bg: #faf7f1;          /* arena-50 */
-  --panel: #f2ece1;       /* arena-100 */
-  --text: #1a1711;        /* arena-900 */
-  --muted: #5d5648;       /* arena-600 */
-  --line: #e5dbcb;        /* arena-200 */
-  --accent: #a64b00;      /* burnt orange, darkened to read as text on cream */
-  --accent-soft: #f8e6d6;
-  --green-head: #1f6447;  /* verde-600 */
+  --bg: #ffffff;
+  --panel: #f5f3f1;
+  --text: #1f1f1f;
+  --muted: #5c5c61;
+  --line: #e6e2de;
+  --accent: #a64b00;      /* orange text on white */
+  --green-text: #1f6447;  /* green text on white (verde-600) */
+  --accent-soft: #fdf0e7;
+  --green-soft: #edf5f0;
   --btn-bg: #ffffff;
-  --btn-line: #d2c5af;
-  --header-bg: linear-gradient(180deg, #edf5f0 0%, #faf7f1 100%);
-  --header-sub: #1f6447;
-  --thumb-bg: #e5dbcb;
+  --btn-line: #d9d4ce;
+  --header-bg: linear-gradient(180deg, #ffffff 0%, #f7f5f2 100%);
+  --thumb-bg: #e4e1dd;
   --glow: rgba(191, 87, 0, .14);
-  --nav-bg: #0e2b20;
-  --nav-line: #0e2b20;
-  --nav-link: #d6e8dd;
-  --nav-on: #f0a56b;
+  --nav-bg: #f5f3f1;
+  --nav-line: #e6e2de;
+  --nav-link: #333333;
+  --nav-on: var(--accent);
 }
 body[data-theme="cinema"] header.site { background: var(--header-bg); border-bottom: 4px solid var(--orange); }
 body[data-theme="cinema"] header.site .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
@@ -269,23 +272,24 @@ body[data-theme="cinema"] header.site h1 {
 body[data-theme="cinema"] header.site h1::before { content: "\25B6\00A0"; color: var(--orange); font-size: 0.8em; }
 body[data-theme="cinema"] header.site p { color: var(--header-sub); }
 body[data-theme="cinema"] .player { border: 2px solid var(--orange); box-shadow: 0 18px 50px var(--glow); }
-body[data-theme="cinema"] .label { background: var(--orange); color: var(--on-orange); padding: 3px 10px; border-radius: 3px; }
+body[data-theme="cinema"] .label { background: var(--green); color: var(--on-green); padding: 3px 10px; border-radius: 3px; }
 body[data-theme="cinema"] h2.title { font-family: "Oswald", sans-serif; font-weight: 500; font-size: 30px; }
-body[data-theme="cinema"] section.reactions { border-top: 2px solid var(--orange); }
+body[data-theme="cinema"] section.reactions { border-top: 2px solid var(--green); }
 body[data-theme="cinema"] section.reactions h3,
 body[data-theme="cinema"] aside h3 {
-  font-family: "Oswald", sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: var(--green-head);
+  font-family: "Oswald", sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: var(--accent);
 }
+body[data-theme="cinema"] aside h3 { color: var(--green-text); }
 body[data-theme="cinema"] aside h3 { border-bottom: 2px solid var(--orange); padding-bottom: 6px; }
 body[data-theme="cinema"] .buttons button { background: var(--btn-bg); color: var(--text); border-color: var(--btn-line); }
 body[data-theme="cinema"] .buttons .count { background: var(--line); color: var(--text); }
-body[data-theme="cinema"] .buttons button:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
-body[data-theme="cinema"] .buttons button:disabled { background: var(--orange); border-color: var(--orange); color: var(--on-orange); }
-body[data-theme="cinema"] .buttons button:disabled .count { background: #fff; color: var(--orange); }
-body[data-theme="cinema"] aside a.item[aria-current="true"] { background: var(--accent-soft); border-color: var(--orange); }
+body[data-theme="cinema"] .buttons button:hover:not(:disabled) { border-color: var(--green); background: var(--green-soft); }
+body[data-theme="cinema"] .buttons button:disabled { background: var(--green); border-color: var(--green); color: var(--on-green); }
+body[data-theme="cinema"] .buttons button:disabled .count { background: #fff; color: var(--green); }
+body[data-theme="cinema"] aside a.item[aria-current="true"] { background: var(--green-soft); border-color: var(--green); }
 body[data-theme="cinema"] aside .thumb { background: var(--thumb-bg); }
 body[data-theme="cinema"] .feed li span:first-child::before { content: "\25CF\00A0\00A0"; color: var(--accent); }
-body[data-theme="cinema"] footer.site { border-top: 2px solid var(--orange); }
+body[data-theme="cinema"] footer.site { border-top: 2px solid var(--green); }
 body[data-theme="cinema"] .btn { background: var(--orange); border-color: var(--orange); color: var(--on-orange); }
 body[data-theme="cinema"] .btn.secondary { background: transparent; color: var(--accent); border-color: var(--accent); }
 body[data-theme="cinema"] input[type="text"], body[data-theme="cinema"] input[type="url"], body[data-theme="cinema"] textarea {
@@ -307,7 +311,7 @@ body:not([data-theme="cinema"]) .mode-toggle { display: none; }
 .sitenav .wrap { display: flex; flex-wrap: wrap; gap: 4px 22px; padding-top: 10px; padding-bottom: 10px; }
 .sitenav a { color: var(--nav-link, #d6d6d6); text-decoration: none; font-size: 15px; font-weight: 600; padding: 4px 0; }
 .sitenav a:hover { color: #fff; }
-.sitenav a[aria-current="page"] { color: var(--nav-on, #f0a070); border-bottom: 2px solid var(--orange, #e08a57); }
+.sitenav a[aria-current="page"] { color: var(--nav-on, #f0a070); border-bottom: 2px solid var(--green, #e08a57); }
 
 /* ---- Category lists ---- */
 .cat-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
@@ -317,7 +321,7 @@ body:not([data-theme="cinema"]) .mode-toggle { display: none; }
   background: var(--btn-bg, #fff); color: var(--text); border: 1px solid var(--btn-line, var(--line));
   display: inline-flex; align-items: center; gap: 6px;
 }
-.cat-tab:hover { border-color: var(--accent); background: var(--accent-soft); }
+.cat-tab:hover { border-color: var(--green, var(--accent)); background: var(--green-soft, var(--accent-soft)); }
 .cat-tab[aria-pressed="true"] { background: var(--tab-on, var(--accent)); border-color: var(--tab-on, var(--accent)); color: var(--on-orange, #fff); }
 .cat-count { font-size: 12px; font-weight: 700; background: var(--line); color: var(--text); border-radius: 999px; padding: 0 7px; }
 .cat-tab[aria-pressed="true"] .cat-count { background: #fff; color: var(--tab-on, var(--accent)); }
