@@ -1,6 +1,6 @@
 // Class pulse: live charts of student reactions, shown on the admin page after sign-in.
-import { REACTIONS } from "./firebase-config.js?v=6";
-import { toDate, niceDate } from "./data.js?v=6";
+import { REACTIONS } from "./firebase-config.js?v=7";
+import { toDate, niceDate } from "./data.js?v=7";
 
 const $ = id => document.getElementById(id);
 

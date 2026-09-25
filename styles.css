@@ -224,6 +224,7 @@ body[data-theme="cinema"] {
   --accent: #ff8a3d;
   --accent-soft: #2a1a10;
   --orange: #cb4900;
+  --tab-on: #dd7a45;
   --btn-bg: #1f1f1f;
   --btn-line: #3a3a3a;
   --header-bg: linear-gradient(180deg, #1c1c1c 0%, #121212 100%);
@@ -301,17 +302,18 @@ body[data-mode="light"] .sitenav a { color: #333; }
 body[data-mode="light"] .sitenav a:hover, body[data-mode="light"] .sitenav a[aria-current="page"] { color: #cb4900; }
 
 /* ---- Category lists ---- */
-.cat-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 24px; }
+.cat-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
 .cat-tab {
-  font: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
-  min-height: 44px; padding: 8px 16px; border-radius: 999px;
+  font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+  min-height: 38px; padding: 5px 13px; border-radius: 999px;
   background: var(--btn-bg, #fff); color: var(--text); border: 1px solid var(--btn-line, var(--line));
-  display: inline-flex; align-items: center; gap: 8px;
+  display: inline-flex; align-items: center; gap: 6px;
 }
 .cat-tab:hover { border-color: var(--accent); background: var(--accent-soft); }
-.cat-tab[aria-pressed="true"] { background: var(--orange, var(--accent)); border-color: var(--orange, var(--accent)); color: #fff; }
-.cat-count { font-size: 13px; font-weight: 700; background: var(--line); color: var(--text); border-radius: 999px; padding: 0 8px; }
-.cat-tab[aria-pressed="true"] .cat-count { background: #fff; color: var(--orange, var(--accent)); }
+/* Selected list: a softer, lighter orange with dark text (white text is too faint on it). */
+.cat-tab[aria-pressed="true"] { background: var(--tab-on, var(--accent)); border-color: var(--tab-on, var(--accent)); color: #1a1a1a; }
+.cat-count { font-size: 12px; font-weight: 700; background: var(--line); color: var(--text); border-radius: 999px; padding: 0 7px; }
+.cat-tab[aria-pressed="true"] .cat-count { background: rgba(255, 255, 255, .6); color: #1a1a1a; }
 aside li.group-head {
   font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
   color: var(--muted); margin: 16px 0 6px; padding-left: 6px;

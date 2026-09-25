@@ -1,4 +1,4 @@
-import { SITE_TITLE, SITE_SUBTITLE, REACTIONS, SITE_THEME, CATEGORIES } from "./firebase-config.js?v=6";
+import { SITE_TITLE, SITE_SUBTITLE, REACTIONS, SITE_THEME, CATEGORIES } from "./firebase-config.js?v=7";
 document.body.dataset.theme = new URLSearchParams(location.search).get("theme") || SITE_THEME || document.body.dataset.theme;
 
 // Dark / light switch (remembered on each student's device)
@@ -13,7 +13,7 @@ modeBtn.addEventListener("click", () => {
   paintMode();
 });
 paintMode();
-import { getStore, DEMO, thumb, niceDate, timeAgo } from "./data.js?v=6";
+import { getStore, DEMO, thumb, niceDate, timeAgo } from "./data.js?v=7";
 
 const $ = id => document.getElementById(id);
 const byId = Object.fromEntries(REACTIONS.map(r => [r.id, r]));

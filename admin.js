@@ -1,7 +1,7 @@
-import { ADMIN_EMAIL, SITE_THEME, CATEGORIES } from "./firebase-config.js?v=6";
+import { ADMIN_EMAIL, SITE_THEME, CATEGORIES } from "./firebase-config.js?v=7";
 document.body.dataset.theme = SITE_THEME || document.body.dataset.theme;
-import { getStore, DEMO, youtubeId, thumb, niceDate } from "./data.js?v=6";
-import { mountStats } from "./stats.js?v=2";
+import { getStore, DEMO, youtubeId, thumb, niceDate } from "./data.js?v=7";
+import { mountStats } from "./stats.js?v=3";
 
 const $ = id => document.getElementById(id);
 if (DEMO) $("demo").hidden = false;
