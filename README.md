@@ -33,14 +33,14 @@ Until this is filled in, the site runs in demo mode with sample data, so you can
 Firebase console > **Authentication > Settings > Authorized domains > Add domain** and enter `YOUR-USERNAME.github.io`.
 
 ## Posting a new documentary
-1. Go to `https://YOUR-USERNAME.github.io/documentaries/admin.html`.
+1. Go to `https://gutierrezmannix.github.io/Recommendations/admin.html`.
 2. Sign in with Google.
 3. Paste the YouTube link, check the title, add a note, and click **Post to feed**.
 
 The newest post becomes the featured video. Older ones move to the side list. You never need to touch GitHub again to post.
 
 ## Seeing how students reacted
-Open `https://YOUR-USERNAME.github.io/documentaries/stats.html` (also linked from the admin page). It charts every reaction live: totals, the most common reactions, the reaction mix for each documentary, and reactions by day, with a table view.
+Open `https://gutierrezmannix.github.io/Recommendations/stats.html` (also linked from the admin page). It charts every reaction live: totals, the most common reactions, the reaction mix for each documentary, and reactions by day, with a table view.
 
 ## Notes
 - Reactions only accept the preset list. The database rules reject any other text, so nobody can type anything mean.
