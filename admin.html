@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Source+Sans+3:wght@400;600;700&display=swap">
   <link rel="stylesheet" href="styles.css?v=6">
+  <link rel="stylesheet" href="stats.css?v=2">
 </head>
 <body data-theme="cinema" data-mode="dark">
   <script>
@@ -21,7 +22,7 @@
   <header class="site">
     <div class="wrap">
       <h1>Post a documentary</h1>
-      <p><a href="./">View the public page</a> &middot; <a href="stats.html">Class pulse (reaction charts)</a></p>
+      <p><a href="./">View the public page</a></p>
     </div>
   </header>
 
@@ -63,6 +64,46 @@
           <span class="msg" id="formMsg" role="status"></span>
         </div>
       </form>
+
+      <section class="card viz-root" aria-labelledby="pulseHead">
+        <h2 id="pulseHead">Class pulse</h2>
+        <p class="hint">How students are reacting to your recommendations. Updates live. Hidden videos are not counted.</p>
+        <div id="pulseStatus" class="hint">Loading reactions…</div>
+
+        <div id="dash" hidden>
+          <div class="kpis" aria-label="Summary">
+            <div class="kpi"><div class="k-label">Videos</div><div class="k-val" id="kDocs"></div></div>
+            <div class="kpi"><div class="k-label">Reactions</div><div class="k-val" id="kRx"></div></div>
+            <div class="kpi"><div class="k-label">Per video</div><div class="k-val" id="kAvg"></div></div>
+            <div class="kpi"><div class="k-label">Most common</div><div class="k-val k-small" id="kTop"></div></div>
+          </div>
+
+          <div class="pulse-sec">
+            <h3>What students said</h3>
+            <p class="hint">Every reaction across all videos, most common first.</p>
+            <div id="byType" class="hbars"></div>
+          </div>
+
+          <div class="pulse-sec">
+            <h3>Reaction mix by video</h3>
+            <p class="hint">Each bar is one video, split into the kind of response it drew. Newest first.</p>
+            <div class="legend" id="legend"></div>
+            <div id="mix"></div>
+          </div>
+
+          <div class="pulse-sec">
+            <h3>Reactions by day</h3>
+            <p class="hint">When students reacted, last 30 days.</p>
+            <div id="daily" class="daily"></div>
+          </div>
+
+          <details class="pulse-sec">
+            <summary><h3>Table view</h3></summary>
+            <div class="table-wrap"><table id="table"></table></div>
+          </details>
+        </div>
+        <div id="tip" class="tip" role="tooltip" hidden></div>
+      </section>
 
       <div class="card">
         <h2>Posted videos</h2>

@@ -1,22 +1,8 @@
-import { REACTIONS, SITE_THEME } from "./firebase-config.js?v=6";
-import { getStore, DEMO, toDate, niceDate } from "./data.js?v=6";
-
-document.body.dataset.theme = new URLSearchParams(location.search).get("theme") || SITE_THEME || document.body.dataset.theme;
-
-// Dark / light switch (shared with the main page through localStorage)
-const modeBtn = document.getElementById("modeToggle");
-function paintMode() {
-  modeBtn.textContent = document.body.dataset.mode !== "light" ? "☀ Light mode" : "☾ Dark mode";
-}
-modeBtn.addEventListener("click", () => {
-  document.body.dataset.mode = document.body.dataset.mode === "light" ? "dark" : "light";
-  try { localStorage.setItem("mode", document.body.dataset.mode); } catch {}
-  paintMode();
-});
-paintMode();
+// Class pulse: live charts of student reactions, shown on the admin page after sign-in.
+import { REACTIONS } from "./firebase-config.js?v=6";
+import { toDate, niceDate } from "./data.js?v=6";
 
 const $ = id => document.getElementById(id);
-if (DEMO) $("demo").hidden = false;
 
 // Reactions grouped by the kind of response they signal.
 const GROUPS = [
@@ -44,32 +30,36 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;",
 const plural = (n, w) => `${n} ${w}${n === 1 ? "" : "s"}`;
 
 // ---------- data ----------
-const store = await getStore();
 let videos = [];
 const rx = {};          // videoId -> reactions[]
 const stops = {};
+let mounted = false;
 
-store.watchVideos(list => {
-  videos = list.filter(v => v.visible !== false);
-  for (const v of videos) {
-    if (stops[v.id]) continue;
-    stops[v.id] = store.watchReactions(v.id, r => { rx[v.id] = r; render(); }, err => console.error(err));
-  }
-  render();
-}, err => {
-  console.error(err);
-  $("status").textContent = "Could not load data. Please refresh the page.";
-});
+export function mountStats(store) {
+  if (mounted) return;
+  mounted = true;
+  store.watchVideos(list => {
+    videos = list.filter(v => v.visible !== false);
+    for (const v of videos) {
+      if (stops[v.id]) continue;
+      stops[v.id] = store.watchReactions(v.id, r => { rx[v.id] = r; render(); }, err => console.error(err));
+    }
+    render();
+  }, err => {
+    console.error(err);
+    $("pulseStatus").textContent = "Could not load reactions. Please refresh the page.";
+  });
+}
 
 // ---------- render ----------
 function render() {
   if (!videos.length) {
-    $("status").hidden = false;
-    $("status").textContent = "No documentaries posted yet.";
+    $("pulseStatus").hidden = false;
+    $("pulseStatus").textContent = "Nothing posted yet.";
     $("dash").hidden = true;
     return;
   }
-  $("status").hidden = true;
+  $("pulseStatus").hidden = true;
   $("dash").hidden = false;
 
   const all = videos.flatMap(v => (rx[v.id] || []).filter(r => byId[r.type]));
@@ -210,7 +200,7 @@ function renderDaily(all) {
 
 function renderTable() {
   const t = $("table");
-  const head = `<thead><tr><th>Documentary</th>${REACTIONS.map(r => `<th>${esc(r.label)}</th>`).join("")}<th>Total</th></tr></thead>`;
+  const head = `<thead><tr><th>Video</th>${REACTIONS.map(r => `<th>${esc(r.label)}</th>`).join("")}<th>Total</th></tr></thead>`;
   const rows = videos.map(v => {
     const list = rx[v.id] || [];
     const cells = REACTIONS.map(r => `<td>${list.filter(x => x.type === r.id).length}</td>`).join("");
