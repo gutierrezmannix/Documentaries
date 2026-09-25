@@ -1,6 +1,6 @@
 // Class pulse: live charts of student reactions, shown on the admin page after sign-in.
 import { REACTIONS } from "./firebase-config.js?v=7";
-import { toDate, niceDate } from "./data.js?v=7";
+import { toDate, niceDate } from "./data.js?v=8";
 
 const $ = id => document.getElementById(id);
 
@@ -16,7 +16,7 @@ const rxText = r => (r.icon ? r.icon + " " : "") + r.label;
 
 // ---------- tooltip ----------
 const tip = $("tip");
-function hover(el, html) {
+export function hover(el, html) {
   el.addEventListener("mousemove", e => {
     tip.innerHTML = html();
     tip.hidden = false;
@@ -26,8 +26,8 @@ function hover(el, html) {
   });
   el.addEventListener("mouseleave", () => { tip.hidden = true; });
 }
-const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const plural = (n, w) => `${n} ${w}${n === 1 ? "" : "s"}`;
+export const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+export const plural = (n, w) => `${n} ${w}${n === 1 ? "" : "s"}`;
 
 // ---------- data ----------
 let videos = [];
@@ -81,13 +81,17 @@ function render() {
 }
 
 function renderByType(ranked, total) {
-  const box = $("byType");
+  hbars($("byType"), ranked.map(r => ({ label: rxText(r), n: r.n })), "reaction", total);
+}
+
+// Horizontal bars: rows of { label, n }, in the order given.
+export function hbars(box, rows, unit, total) {
   box.innerHTML = "";
-  const max = Math.max(1, ...ranked.map(r => r.n));
-  for (const r of ranked) {
+  const max = Math.max(1, ...rows.map(r => r.n));
+  for (const r of rows) {
     const l = document.createElement("div");
     l.className = "hb-label";
-    l.textContent = rxText(r);
+    l.textContent = r.label;
     const t = document.createElement("div");
     t.className = "hb-track";
     const f = document.createElement("div");
@@ -98,7 +102,7 @@ function renderByType(ranked, total) {
     n.textContent = r.n;
     t.append(f, n);
     const pct = total ? Math.round((r.n / total) * 100) : 0;
-    hover(t, () => `<strong>${esc(rxText(r))}</strong>${plural(r.n, "reaction")} · ${pct}% of all`);
+    hover(t, () => `<strong>${esc(r.label)}</strong>${plural(r.n, unit)} · ${pct}% of all`);
     box.append(l, t);
   }
 }
@@ -165,15 +169,18 @@ function renderMix() {
 function dayKey(d) { return d.toISOString().slice(0, 10); }
 
 function renderDaily(all) {
-  const box = $("daily");
+  drawDaily($("daily"), all.map(r => toDate(r.createdAt)), 30, "reaction");
+}
+
+// Daily columns for the last `days` days, one count per date given.
+export function drawDaily(box, dates, days, unit) {
   box.innerHTML = "";
-  const days = 30;
   const end = new Date(); end.setHours(0, 0, 0, 0);
   const keys = [];
   for (let i = days - 1; i >= 0; i--) keys.push(new Date(end.getTime() - i * 86400000));
   const c = {};
-  all.forEach(r => {
-    const d = toDate(r.createdAt); d.setHours(0, 0, 0, 0);
+  dates.forEach(date => {
+    const d = new Date(date); d.setHours(0, 0, 0, 0);
     c[dayKey(d)] = (c[dayKey(d)] || 0) + 1;
   });
   const max = Math.max(1, ...keys.map(k => c[dayKey(k)] || 0));
@@ -185,7 +192,7 @@ function renderDaily(all) {
     b.style.height = n ? Math.max(4, (n / max) * 100) + "%" : "0";
     col.append(b);
     const label = k.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" });
-    hover(col, () => `<strong>${esc(label)}</strong>${plural(n, "reaction")}`);
+    hover(col, () => `<strong>${esc(label)}</strong>${plural(n, unit)}`);
     box.append(col);
   }
   const fmt = d => d.toLocaleDateString(undefined, { month: "short", day: "numeric" });

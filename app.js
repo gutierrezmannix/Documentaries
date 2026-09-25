@@ -13,7 +13,22 @@ modeBtn.addEventListener("click", () => {
   paintMode();
 });
 paintMode();
-import { getStore, DEMO, thumb, niceDate, timeAgo } from "./data.js?v=7";
+import { getStore, DEMO, thumb, niceDate, timeAgo } from "./data.js?v=8";
+import { trackView, trackWatch } from "./track.js?v=1";
+
+trackView("recommendations");
+
+// YouTube's player API tells us when a video actually starts playing.
+let ytReady = null;
+function loadYouTubeApi() {
+  if (!ytReady) ytReady = new Promise(resolve => {
+    window.onYouTubeIframeAPIReady = () => resolve(window.YT);
+    const s = document.createElement("script");
+    s.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(s);
+  });
+  return ytReady;
+}
 
 const $ = id => document.getElementById(id);
 const byId = Object.fromEntries(REACTIONS.map(r => [r.id, r]));
@@ -47,12 +62,15 @@ function renderPlayer(v) {
   p.innerHTML = "";
   if (v.youtubeId) {
     const f = document.createElement("iframe");
-    f.src = `https://www.youtube-nocookie.com/embed/${v.youtubeId}?rel=0`;
+    f.src = `https://www.youtube-nocookie.com/embed/${v.youtubeId}?rel=0&enablejsapi=1&origin=${encodeURIComponent(location.origin)}`;
     f.title = v.title;
     f.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
     f.allowFullscreen = true;
     f.referrerPolicy = "strict-origin-when-cross-origin";
     p.appendChild(f);
+    loadYouTubeApi().then(YT => new YT.Player(f, {
+      events: { onStateChange: e => { if (e.data === YT.PlayerState.PLAYING) trackWatch(v.id); } }
+    })).catch(() => {});
   } else {
     const d = document.createElement("div");
     d.className = "placeholder";

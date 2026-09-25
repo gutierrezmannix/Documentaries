@@ -85,7 +85,18 @@ function demoStore() {
     async signOut() { user = null; aListeners.forEach(cb => cb(user)); },
     async addVideo(v) { videos.push({ ...v, id: "d" + Math.random().toString(36).slice(2), postedAt: new Date() }); emitV(); },
     async updateVideo(id, patch) { Object.assign(videos.find(v => v.id === id), patch); emitV(); },
-    async deleteVideo(id) { const i = videos.findIndex(v => v.id === id); if (i > -1) videos.splice(i, 1); emitV(); }
+    async deleteVideo(id) { const i = videos.findIndex(v => v.id === id); if (i > -1) videos.splice(i, 1); emitV(); },
+    watchVisits(since, cb) {
+      const pages = ["home", "home", "home", "pubs", "teaching", "teaching", "data", "recommendations", "recommendations"];
+      const visits = [];
+      for (let i = 0; i < 160; i++) {
+        const at = new Date(now - Math.random() * 30 * day);
+        visits.push({ kind: "view", page: pages[i % pages.length], at });
+        if (i % 4 === 0) visits.push({ kind: "watch", page: "recommendations", video: ["d3", "d2", "d1"][i % 3], at });
+      }
+      cb(visits.filter(v => v.at >= since));
+      return () => {};
+    }
   };
 }
 
@@ -115,7 +126,11 @@ async function firebaseStore() {
     signOut() { return au.signOut(auth); },
     addVideo(v) { return fs.addDoc(videosCol, { ...v, postedAt: fs.serverTimestamp() }); },
     updateVideo(id, patch) { return fs.updateDoc(fs.doc(db, "videos", id), patch); },
-    deleteVideo(id) { return fs.deleteDoc(fs.doc(db, "videos", id)); }
+    deleteVideo(id) { return fs.deleteDoc(fs.doc(db, "videos", id)); },
+    watchVisits(since, cb, onErr) {
+      const q = fs.query(fs.collection(db, "visits"), fs.where("at", ">=", since), fs.orderBy("at", "desc"), fs.limit(20000));
+      return fs.onSnapshot(q, snap => cb(snap.docs.map(d => d.data())), onErr);
+    }
   };
 }
 
