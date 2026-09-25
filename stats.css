@@ -1,0 +1,87 @@
+/* Class Pulse page: charts of student reactions. Uses the site theme tokens from styles.css. */
+.viz-root {
+  --s-positive: #3987e5;   /* categorical slot 1, dark step */
+  --s-learning: #d95926;   /* slot 2 */
+  --s-critical: #199e70;   /* slot 3 */
+  --bar: #ff8a3d;
+  --grid: #2e2e2e;
+  padding-bottom: 48px;
+}
+body[data-mode="light"] .viz-root {
+  --s-positive: #2a78d6;
+  --s-learning: #eb6834;
+  --s-critical: #1baf7a;
+  --bar: #cb4900;
+  --grid: #e6e2de;
+}
+
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-bottom: 24px; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+.k-label { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; font-weight: 600; }
+.k-val { font-family: "Oswald", sans-serif; font-weight: 500; font-size: 40px; line-height: 1.1; margin-top: 4px; font-variant-numeric: tabular-nums; }
+.k-val.k-small { font-size: 22px; line-height: 1.3; padding-top: 8px; }
+
+.panel { border: 1px solid var(--line); border-radius: 8px; padding: 18px 20px; margin-bottom: 20px; }
+.panel h3 { margin: 0 0 4px; font-size: 18px; }
+body[data-theme="cinema"] .panel h3 {
+  font-family: "Oswald", sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: var(--accent);
+}
+
+/* horizontal bars */
+.hbars { display: grid; grid-template-columns: max-content 1fr; gap: 6px 14px; align-items: center; }
+.hb-label { font-size: 15px; }
+.hb-track { position: relative; height: 26px; display: flex; align-items: center; gap: 8px; cursor: default; }
+.hb-fill { height: 18px; background: var(--bar); border-radius: 0 4px 4px 0; min-width: 2px; }
+.hb-fill.zero { background: var(--grid); }
+.hb-num { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.hb-track:hover .hb-fill { filter: brightness(1.12); }
+
+/* stacked mix */
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; color: var(--muted); margin-bottom: 12px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.mix-row { margin-bottom: 14px; }
+.mix-title { font-size: 15px; font-weight: 600; display: flex; justify-content: space-between; gap: 12px; }
+.mix-title a { color: var(--text); text-decoration: none; }
+.mix-title a:hover { color: var(--accent); }
+.mix-title .n { color: var(--muted); font-weight: 400; font-size: 14px; white-space: nowrap; }
+.mix-bar { display: flex; gap: 2px; height: 22px; margin-top: 6px; }
+.mix-seg { height: 100%; display: flex; align-items: center; padding: 0 6px; font-size: 13px; font-weight: 700; color: #fff; overflow: hidden; white-space: nowrap; min-width: 3px; }
+.mix-seg:first-child { border-radius: 4px 0 0 4px; }
+.mix-seg:last-child { border-radius: 0 4px 4px 0; }
+.mix-seg:only-child { border-radius: 4px; }
+.mix-empty { height: 22px; margin-top: 6px; border: 1px dashed var(--line); border-radius: 4px; font-size: 13px; color: var(--muted); display: flex; align-items: center; padding: 0 8px; }
+
+/* daily columns */
+.daily { display: flex; align-items: flex-end; gap: 2px; height: 140px; border-bottom: 1px solid var(--grid); position: relative; }
+.day { flex: 1; height: 100%; display: flex; align-items: flex-end; }
+.day b { display: block; width: 100%; background: var(--bar); border-radius: 4px 4px 0 0; }
+.day:hover b { filter: brightness(1.12); }
+.daily-axis { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+/* table */
+details summary { cursor: pointer; list-style: none; }
+details summary::-webkit-details-marker { display: none; }
+details summary h3 { display: inline; }
+details summary::after { content: " +"; color: var(--muted); }
+details[open] summary::after { content: " −"; }
+.table-wrap { overflow-x: auto; margin-top: 12px; }
+table { border-collapse: collapse; font-size: 14px; width: 100%; }
+th, td { padding: 6px 10px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+th:first-child, td:first-child { text-align: left; white-space: normal; min-width: 200px; }
+th { color: var(--muted); font-weight: 600; }
+
+/* tooltip */
+.tip {
+  position: fixed; z-index: 10; pointer-events: none;
+  background: var(--panel); color: var(--text); border: 1px solid var(--line);
+  border-radius: 6px; padding: 6px 10px; font-size: 13px; box-shadow: 0 6px 20px rgba(0,0,0,.25);
+  max-width: 260px;
+}
+.tip strong { display: block; }
+
+@media (max-width: 700px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .k-val { font-size: 32px; }
+  .panel { padding: 14px; }
+}

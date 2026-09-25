@@ -39,6 +39,9 @@ Firebase console > **Authentication > Settings > Authorized domains > Add domain
 
 The newest post becomes the featured video. Older ones move to the side list. You never need to touch GitHub again to post.
 
+## Seeing how students reacted
+Open `https://YOUR-USERNAME.github.io/documentaries/stats.html` (also linked from the admin page). It charts every reaction live: totals, the most common reactions, the reaction mix for each documentary, and reactions by day, with a table view.
+
 ## Notes
 - Reactions only accept the preset list. The database rules reject any other text, so nobody can type anything mean.
 - Each device can give each reaction once per video. This stops casual spamming but is not a hard limit.
