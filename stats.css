@@ -3,14 +3,14 @@
   --s-positive: #3987e5;   /* categorical slot 1, dark step */
   --s-learning: #d95926;   /* slot 2 */
   --s-critical: #199e70;   /* slot 3 */
-  --bar: #ff8a3d;
+  --bar: #e08a57;
   --grid: #2e2e2e;
 }
 body[data-mode="light"] .viz-root {
   --s-positive: #2a78d6;
   --s-learning: #eb6834;
   --s-critical: #1baf7a;
-  --bar: #cb4900;
+  --bar: #cf6e3a;
   --grid: #e6e2de;
 }
 
