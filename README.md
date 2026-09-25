@@ -42,6 +42,11 @@ The newest post becomes the featured video. Older ones move to the side list. Yo
 ## Seeing how students reacted
 Sign in to the admin page and scroll to **Class pulse**. It charts every reaction live: totals, the most common reactions, the reaction mix for each documentary, and reactions by day, with a table view.
 
+## Site traffic
+The admin page also shows **Site traffic**: anonymous visits to the home page, its Publications, Teaching and Data sections, and the Recommendations page, plus how many times each video started playing. Each person counts once per section per browser session, and nothing identifies who they are. The counter is `track.js`; the home page loads it from `/Documentaries/track.js`.
+
+To turn it on (one time): Firebase console > **Firestore Database > Rules**, paste the whole updated `firestore.rules` file, and click **Publish**. Until then the traffic section says tracking is not on yet, and the site works as usual.
+
 ## Notes
 - Reactions only accept the preset list. The database rules reject any other text, so nobody can type anything mean.
 - Each device can give each reaction once per video. This stops casual spamming but is not a hard limit.

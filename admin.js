@@ -1,7 +1,8 @@
 import { ADMIN_EMAIL, SITE_THEME, CATEGORIES } from "./firebase-config.js?v=7";
 document.body.dataset.theme = SITE_THEME || document.body.dataset.theme;
-import { getStore, DEMO, youtubeId, thumb, niceDate } from "./data.js?v=7";
-import { mountStats } from "./stats.js?v=3";
+import { getStore, DEMO, youtubeId, thumb, niceDate } from "./data.js?v=8";
+import { mountStats } from "./stats.js?v=4";
+import { mountTraffic } from "./traffic.js?v=1";
 
 const $ = id => document.getElementById(id);
 if (DEMO) $("demo").hidden = false;
@@ -40,6 +41,7 @@ store.onAuth(user => {
     $("who").textContent = user.email;
     if (!stopVideos) stopVideos = store.watchVideos(renderList, e => console.error(e));
     mountStats(store);
+    mountTraffic(store);
   }
 });
 

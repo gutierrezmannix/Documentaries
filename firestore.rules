@@ -31,5 +31,21 @@ service cloud.firestore {
         allow delete: if isAdmin();
       }
     }
+
+    // Traffic: anonymous visit and video-watch counts. Anyone can add one,
+    // only in this exact shape; only you can read or delete them.
+    match /visits/{visitId} {
+      allow read, delete: if isAdmin();
+      allow create: if request.resource.data.keys().hasAll(["kind", "page", "at"])
+        && request.resource.data.keys().hasOnly(["kind", "page", "video", "at"])
+        && request.resource.data.kind in ["view", "watch"]
+        && request.resource.data.page is string
+        && request.resource.data.page.matches("[a-z0-9-]{1,30}")
+        && (!("video" in request.resource.data)
+            || (request.resource.data.video is string
+                && request.resource.data.video.matches("[A-Za-z0-9_-]{1,40}")))
+        && request.resource.data.at == request.time;
+      allow update: if false;
+    }
   }
 }

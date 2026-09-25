@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Source+Sans+3:wght@400;600;700&display=swap">
   <link rel="stylesheet" href="styles.css?v=9">
-  <link rel="stylesheet" href="stats.css?v=4">
+  <link rel="stylesheet" href="stats.css?v=5">
 </head>
 <body data-theme="cinema" data-mode="dark">
   <script>
@@ -65,6 +65,40 @@
         </div>
       </form>
 
+      <section class="card viz-root" aria-labelledby="trafficHead">
+        <h2 id="trafficHead">Site traffic</h2>
+        <p class="hint">Anonymous visits to each part of your site and plays of each video. A person counts once per section per browser session; nothing identifies who they are.</p>
+        <div class="cat-tabs" id="trafficRange" aria-label="Time range"></div>
+        <div id="trafficStatus" class="hint">Loading traffic…</div>
+
+        <div id="traffic" hidden>
+          <div class="kpis" aria-label="Traffic summary">
+            <div class="kpi"><div class="k-label">Home page</div><div class="k-val" id="tHome"></div></div>
+            <div class="kpi"><div class="k-label">Pubs, teaching, data</div><div class="k-val" id="tSections"></div></div>
+            <div class="kpi"><div class="k-label">Recommendations</div><div class="k-val" id="tRecs"></div></div>
+            <div class="kpi"><div class="k-label">Video plays</div><div class="k-val" id="tWatches"></div></div>
+          </div>
+
+          <div class="pulse-sec">
+            <h3>Visits by section</h3>
+            <p class="hint">Publications, Teaching and Data count when someone scrolls to that section or clicks it in the menu.</p>
+            <div id="bySection" class="hbars"></div>
+          </div>
+
+          <div class="pulse-sec">
+            <h3>Plays by video</h3>
+            <p class="hint">Counted when a video actually starts playing on the Recommendations page.</p>
+            <div id="byVideo" class="hbars"></div>
+          </div>
+
+          <div class="pulse-sec">
+            <h3>Visits by day</h3>
+            <p class="hint">Visits to the home page and the Recommendations page.</p>
+            <div id="trafficDaily" class="daily"></div>
+          </div>
+        </div>
+      </section>
+
       <section class="card viz-root" aria-labelledby="pulseHead">
         <h2 id="pulseHead">Class pulse</h2>
         <p class="hint">How students are reacting to your recommendations. Updates live. Hidden videos are not counted.</p>
@@ -113,6 +147,6 @@
     </div>
   </main>
 
-  <script type="module" src="admin.js?v=7"></script>
+  <script type="module" src="admin.js?v=8"></script>
 </body>
 </html>
